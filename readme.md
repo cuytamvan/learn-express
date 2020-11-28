@@ -1,7 +1,6 @@
 # API Mysql
 
-## development
-
+## Development
 ### plugin nu dibutuh keun 
 1. helmet : ajang security 🔒
 1. morgan : ajang logging 📰
