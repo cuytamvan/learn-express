@@ -12,4 +12,5 @@
     - eslint ✅
 1. koneksi ✅
 1. kudu nyieun CRUD user *(on progress)*
+1. pake validasi
 1. kudu nyieun upload foto or something nu aya upload an 

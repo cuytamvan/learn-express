@@ -8,12 +8,14 @@ const favicon = require('serve-favicon');
 dotenv.config();
 
 const api = require('./Api');
+const middleware = require('./middleware');
 
 const app = express();
 app.use(favicon(path.join(__dirname, '../public', 'favicon.svg')));
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.json({
@@ -26,5 +28,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', api);
+
+app.use(middleware.notFound);
+app.use(middleware.errorHandler);
 
 module.exports = app;
