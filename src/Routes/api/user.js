@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const { index, show, store } = require('../Controller/userController');
+const { index, show, store } = require('../../Controller/userController');
 
 router.route('/')
   .post(store)

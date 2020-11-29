@@ -7,7 +7,7 @@ const favicon = require('serve-favicon');
 
 dotenv.config();
 
-const api = require('./Api');
+const api = require('./Routes/api');
 const middleware = require('./middleware');
 
 const app = express();
