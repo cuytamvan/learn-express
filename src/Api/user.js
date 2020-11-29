@@ -6,42 +6,50 @@ const userResource = require('../Resources/userResource');
 
 const table = 'users';
 
-router.get('/', (req, res) => {
-  const sql = `SELECT * from ${table}`;
-  con.query(sql, (err, result) => {
-    if (err) {
-      res.json({
-        code: 500,
-        message: err,
-      });
-    }
+router.get('/', (req, res, next) => {
+  try {
+    const sql = `SELECT * from ${table}`;
+    con.query(sql, (err, result) => {
+      if (err) {
+        res.json({
+          code: 500,
+          message: err,
+        });
+      }
 
-    res.json({
-      code: 200,
-      message: 'success',
-      data: userResource(result),
+      res.json({
+        code: 200,
+        message: 'success',
+        data: userResource(result),
+      });
     });
-  });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/:id', (req, res) => {
-  const sql = `SELECT * FROM ${table} where id=?`;
-  const { id } = req.params;
+router.get('/:id', (req, res, next) => {
+  try {
+    const sql = `SELECT * FROM ${table} where id = ?`;
+    const { id } = req.params;
 
-  con.query(sql, [id], (err, result) => {
-    if (err) {
-      res.json({
-        code: 500,
-        message: err,
+    con.query(sql, [id], (err, result) => {
+      if (err) {
+        return res.json({
+          code: 500,
+          message: err.message,
+        });
+      }
+      if (result.length === 0) return next();
+      return res.json({
+        code: 200,
+        message: 'success',
+        data: userResource(result[0]),
       });
-    }
-
-    res.json({
-      code: 200,
-      message: 'success',
-      data: userResource(result),
     });
-  });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
